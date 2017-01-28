@@ -12,8 +12,13 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     //Field
-    public static int WIDTH = 400;
-    public static int HEIGHT = 400;
+    public static int WIDTH = 600;
+    public static int HEIGHT = 600;
+
+    public static int mouseX;
+    public static int mouseY;
+    public static boolean leftMouse;
+
 
     private Thread thread = new Thread(this);
 
@@ -22,6 +27,18 @@ public class GamePanel extends JPanel implements Runnable {
 
     private int FPS = 30;
     private long timerFPS;
+    private double milisToFPS;
+    private int sleepTime;
+
+    public enum STATES  {
+        MENU,
+        PLAY,
+        NEW_GAME,
+        SETTINGS,
+
+    }
+
+    public static STATES state = STATES.MENU;
 
     public static GameBack background;
     public static Player player;
@@ -29,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Enemy> enemies;
     public static ArrayList<Boss> boss;
     public static Wave wave;
+    public static Menu menu;
 
 
     //Constructor
@@ -40,6 +58,9 @@ public class GamePanel extends JPanel implements Runnable {
         requestFocus();
 
         addKeyListener(new Listeners());
+
+        addMouseMotionListener(new Listeners());
+        addMouseListener(new Listeners());
 
 
     }
@@ -54,6 +75,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public void run() {
+       FPS = 30;
+       milisToFPS = 1000 / FPS;
+       sleepTime = 0;
+
 
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         g = (Graphics2D) image.getGraphics();
@@ -61,32 +86,52 @@ public class GamePanel extends JPanel implements Runnable {
 //        String name = g.getClass().getName();
 //        System.out.println(name);
 //        sun.java2d.SunGraphics2D
-
+        leftMouse = false;
         background = new GameBack();
         player = new Player();
         bullets = new ArrayList<Bullet>();
         enemies = new ArrayList<Enemy>();
         boss = new ArrayList<Boss>();//TODO
         wave = new Wave();
+        menu = new Menu();
 
 //        //TODO delete
 //        enemies.add(new Enemy(1,1));
 //        enemies.add(new Enemy(1,1));
 
         while (true) { //TODO States
-            gameUpdate();
-            gameRender();
-            gameDraw();
+            timerFPS = System.nanoTime();
+
+            if (state.equals(STATES.MENU)) {
+                background.update();
+                background.draw(g);
+                menu.update();
+                menu.draw(g);
+                gameDraw();
+            }
+            if (state.equals(STATES.PLAY)) {
+                gameUpdate();
+                gameRender();
+                gameDraw();
+            }
+
+            timerFPS = (System.nanoTime() - timerFPS ) / 1000000;
+            if (milisToFPS > timerFPS) {
+                sleepTime = (int)(milisToFPS - timerFPS);
+            } else sleepTime = 1;
             try {
-                thread.sleep(33); //TODO FPS
+                thread.sleep(sleepTime);
+                System.out.println("FPS: " + sleepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            timerFPS = 0;
+            sleepTime = 1;
         }
     }
 
     public void gameUpdate() {
-        //BackGround update
+       //BackGround update
         background.update();
         //Player update
         player.update();

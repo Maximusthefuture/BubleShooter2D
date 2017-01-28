@@ -6,7 +6,7 @@ import java.awt.event.*;
 /**
  * Created by MaxRemz on 07.06.2016.
  */
-public class Listeners implements KeyListener{
+public class Listeners implements KeyListener, MouseListener, MouseMotionListener{
 
 
 
@@ -27,6 +27,9 @@ public class Listeners implements KeyListener{
         }
         if (key == KeyEvent.VK_SPACE){
             Player.isFiring = true;
+        }
+        if (key == KeyEvent.VK_ESCAPE) {
+            GamePanel.state = GamePanel.STATES.MENU;
         }
     }
 
@@ -52,5 +55,41 @@ public class Listeners implements KeyListener{
     }
     public void keyTyped(KeyEvent e) {
 
+    }
+
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    public void mousePressed(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            GamePanel.player.isFiring = true;
+            GamePanel.leftMouse = true;
+        }
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            GamePanel.player.isFiring = false;
+            GamePanel.leftMouse = false;
+        }
+    }
+
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    public void mouseExited(MouseEvent mouseEvent) {
+
+    }
+
+    public void mouseDragged(MouseEvent mouseEvent) {
+        GamePanel.mouseX = mouseEvent.getX();
+        GamePanel.mouseY = mouseEvent.getY();
+    }
+
+    public void mouseMoved(MouseEvent mouseEvent) {
+        GamePanel.mouseX = mouseEvent.getX();
+        GamePanel.mouseY = mouseEvent.getY();
     }
 }

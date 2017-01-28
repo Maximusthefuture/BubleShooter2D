@@ -24,4 +24,6 @@ public class GameBack {
         g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
     }
+
+
 }
