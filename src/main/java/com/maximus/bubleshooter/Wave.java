@@ -15,6 +15,7 @@ public class Wave {
 
     private long waveTimerDiff;
     private String waveText;
+    private Graphics2D g;
 
     //Constructor
 
@@ -43,7 +44,9 @@ public class Wave {
             while (enemyCount > 0) {
                 int type = 2;
                 int rank = 2;
-                GamePanel.boss.add(new Boss());
+                for (int i = 0; i < GamePanel.boss.length ; i++) {
+                    GamePanel.boss[i].draw(g);
+                }
                 enemyCount -= rank;
             }
         }

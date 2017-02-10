@@ -41,15 +41,6 @@ public class Enemy {
                     dx = Math.sin(angle) * speed;
                     dy = Math.cos(angle) * speed;
 
-//                    case 2:
-//                        x = Math.random() * GamePanel.WIDTH;
-//                        y = 0;
-//                        r = 7;
-//                        speed = 6;
-//                        health = 10;
-//                        double angle2 = Math.toRadians(Math.random() * 360);
-//                        dx = Math.sin(angle2) * speed;
-//                        dy = Math.cos(angle2) * speed;
 
             }
         }
@@ -66,6 +57,16 @@ public class Enemy {
                     double angle = Math.toRadians(Math.random() * 360);
                     dx = Math.sin(angle) * speed;
                     dy = Math.cos(angle) * speed;
+                    //                    case 2:
+//                        x = Math.random() * GamePanel.WIDTH;
+//                        y = 0;
+//                        r = 7;
+//                        speed = 6;
+//                        health = 10;
+//                        double angle2 = Math.toRadians(Math.random() * 360);
+//                        dx = Math.sin(angle2) * speed;
+//                        dy = Math.cos(angle2) * speed;
+
             }
         }
     }

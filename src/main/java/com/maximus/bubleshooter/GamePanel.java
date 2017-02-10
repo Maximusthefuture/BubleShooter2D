@@ -44,8 +44,9 @@ public class GamePanel extends JPanel implements Runnable {
     public static Player player;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Enemy> enemies;
-    public static ArrayList<Boss> boss;
+//    public static ArrayList<Boss> boss;
     public static Wave wave;
+    public static Boss[] boss;
     public static Menu menu;
 
 
@@ -91,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable {
         player = new Player();
         bullets = new ArrayList<Bullet>();
         enemies = new ArrayList<Enemy>();
-        boss = new ArrayList<Boss>();//TODO
+       boss = new Boss[1];//TODO
         wave = new Wave();
         menu = new Menu();
 
@@ -147,6 +148,9 @@ public class GamePanel extends JPanel implements Runnable {
         background.update();
         //Player update
         player.update();
+        for (int i = 0; i < boss.length; i++) {
+            boss[i].update();
+        }
         //Bullet update
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).update();
@@ -185,6 +189,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
+        //Bullet - boss collide
         //Wave update
         wave.update();
         //Player- enemy collides
@@ -215,6 +220,10 @@ public class GamePanel extends JPanel implements Runnable {
         background.draw(g);
         //Player draw
         player.draw(g);
+        //Boss draw
+        for (int i = 0; i < boss.length; i++) {
+            boss[i].draw(g);
+        }
         //Bullets draw
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).draw(g);
