@@ -42,12 +42,13 @@ public class Wave {
         //TODO
         if (waveNumber == 5 && waveNumber < 6) {
             while (enemyCount > 0) {
-                int type = 2;
-                int rank = 2;
-                for (int i = 0; i < GamePanel.boss.length ; i++) {
-                    GamePanel.boss[i].draw(g);
-                }
-                enemyCount -= rank;
+                GamePanel.bossType = 1;
+                GamePanel.bossRank = 1;
+//                type = 1;
+//                rank = 1;
+//                GamePanel.boss.add(new Boss(type, rank));
+                GamePanel.boss.draw(g);
+                enemyCount -= GamePanel.bossRank;
             }
         }
         waveNumber++;

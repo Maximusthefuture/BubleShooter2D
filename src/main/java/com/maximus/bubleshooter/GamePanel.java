@@ -18,6 +18,8 @@ public class GamePanel extends JPanel implements Runnable {
     public static int mouseX;
     public static int mouseY;
     public static boolean leftMouse;
+    public static int bossRank;
+    public static int bossType;
 
 
     private Thread thread = new Thread(this);
@@ -46,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Enemy> enemies;
 //    public static ArrayList<Boss> boss;
     public static Wave wave;
-    public static Boss[] boss;
+    public static Boss boss;
     public static Menu menu;
 
 
@@ -79,6 +81,8 @@ public class GamePanel extends JPanel implements Runnable {
        FPS = 30;
        milisToFPS = 1000 / FPS;
        sleepTime = 0;
+       bossRank = 1;
+       bossType = 1;
 
 
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -92,7 +96,8 @@ public class GamePanel extends JPanel implements Runnable {
         player = new Player();
         bullets = new ArrayList<Bullet>();
         enemies = new ArrayList<Enemy>();
-       boss = new Boss[1];//TODO
+//        boss = new ArrayList<Boss>();//TODO
+        boss = new Boss(bossType, bossRank);
         wave = new Wave();
         menu = new Menu();
 
@@ -148,9 +153,12 @@ public class GamePanel extends JPanel implements Runnable {
         background.update();
         //Player update
         player.update();
-        for (int i = 0; i < boss.length; i++) {
-            boss[i].update();
-        }
+        //Boss update
+        boss.update();
+//        for (int i = 0; i < boss.size(); i++) {
+//            boss.get(i).update();
+//        }
+
         //Bullet update
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).update();
@@ -221,9 +229,11 @@ public class GamePanel extends JPanel implements Runnable {
         //Player draw
         player.draw(g);
         //Boss draw
-        for (int i = 0; i < boss.length; i++) {
-            boss[i].draw(g);
-        }
+        boss.draw(g);
+//        for (int i = 0; i < boss.size(); i++) {
+//            boss.get(i).draw(g);
+//        }
+
         //Bullets draw
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).draw(g);
